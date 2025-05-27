@@ -5,7 +5,7 @@ using Provider.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<PackagesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var serviceBusConnection = builder.Configuration["ServiceBusConnection"];

@@ -9,7 +9,7 @@ using Provider.Data;
 
 namespace Provider.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(PackagesDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -41,7 +41,7 @@ namespace Provider.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("Benefits");
+                    b.ToTable("Benefits", (string)null);
                 });
 
             modelBuilder.Entity("Provider.Models.Package", b =>
@@ -72,7 +72,7 @@ namespace Provider.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Packages");
+                    b.ToTable("Packages", (string)null);
                 });
 
             modelBuilder.Entity("Provider.Models.Benefit", b =>

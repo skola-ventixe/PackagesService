@@ -7,10 +7,10 @@ namespace Provider.Services;
 
 public class PackageService : IPackageService
 {
-    private readonly AppDbContext _context;
+    private readonly PackagesDbContext _context;
     private readonly DbSet<Package> _packages;
 
-    public PackageService(AppDbContext context)
+    public PackageService(PackagesDbContext context)
     {
         _context = context;
         _packages = _context.Set<Package>();

@@ -10,7 +10,7 @@ using Provider.Data;
 
 namespace Provider.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(PackagesDbContext))]
     [Migration("20250523094442_Updated Relationship on Benefits Entity")]
     partial class UpdatedRelationshiponBenefitsEntity
     {
