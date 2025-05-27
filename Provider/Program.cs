@@ -22,6 +22,11 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseCors(policy =>
+    policy.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
+
 app.MapOpenApi();
 app.UseHttpsRedirection();
 
