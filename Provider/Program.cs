@@ -29,7 +29,7 @@ builder.Services.AddHostedService<PackageBusListener>();
 builder.Services.AddScoped<IPackageService, PackageService>();
 
 builder.Services.AddDbContext<PackagesDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
 
 
