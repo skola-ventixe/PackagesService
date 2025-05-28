@@ -71,6 +71,7 @@ public class PackageService : IPackageService
             var response = await _packages
             .Include(p => p.Benefits)
             .Where(p => p.EventId == eventId)
+            .OrderBy(p => p.Price)
             .ToListAsync();
 
             return new ServiceResponse<List<Package>>
