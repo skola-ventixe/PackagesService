@@ -1,17 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Provider.Services;
 
 namespace Provider.Controllers
 {
     [Route("api/packages")]
     [ApiController]
-    public class PackageController : ControllerBase
+    public class PackageController(PackageService packageService) : ControllerBase
     {
+        private readonly PackageService _packageService = packageService;
+
         [HttpGet]
-        public IActionResult GetPackages()
+        public async Task<IActionResult> GetPackagesAsync()
         {
-            // This method should return a list of packages.
-            // For now, we return a placeholder response.
-            return Ok(new { Message = "This endpoint will return packages." });
+            var result = await _packageService.GetAllPackagesAsync();
+            if (!result.Success)
+                return NotFound(result.Error);
+
+            return Ok(result.Data);
         }
     }
 }
