@@ -5,9 +5,9 @@ namespace Provider.Controllers
 {
     [Route("api/packages")]
     [ApiController]
-    public class PackageController(PackageService packageService) : ControllerBase
+    public class PackageController(IPackageService packageService) : ControllerBase
     {
-        private readonly PackageService _packageService = packageService;
+        private readonly IPackageService _packageService = packageService;
 
         [HttpGet]
         public async Task<IActionResult> GetPackagesAsync()
