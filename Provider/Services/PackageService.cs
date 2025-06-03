@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Provider.Data;
 using Provider.Models;
 
@@ -14,31 +13,6 @@ public class PackageService : IPackageService
     {
         _context = context;
         _packages = _context.Set<Package>();
-    }
-
-    public async Task<ServiceResponse<bool>> AddPackageAsync(Package package)
-    {
-        try
-        {
-            await _packages.AddAsync(package);
-            await _context.SaveChangesAsync();
-            return new ServiceResponse<bool>
-            {
-                Success = true,
-                Message = "Package added successfully.",
-                Data = true
-            };
-        }
-        catch (Exception ex)
-        {
-            // Log the exception (ex) here if needed
-            return new ServiceResponse<bool>
-            {
-                Success = false,
-                Error = $"Something went wrong when trying to add package: {ex.Message}",
-                Data = false
-            };
-        }
     }
 
     public async Task<ServiceResponse<List<Package>>> GetAllPackagesAsync()
@@ -88,6 +62,29 @@ public class PackageService : IPackageService
                 Success = false,
                 Error = $"Something went wrong when trying to get packages: {ex.Message}",
                 Data = []
+            };
+        }
+    }
+    public async Task<ServiceResponse<bool>> AddPackageAsync(Package package)
+    {
+        try
+        {
+            await _packages.AddAsync(package);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<bool>
+            {
+                Success = true,
+                Message = "Package added successfully.",
+                Data = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResponse<bool>
+            {
+                Success = false,
+                Error = $"Something went wrong when trying to add package: {ex.Message}",
+                Data = false
             };
         }
     }

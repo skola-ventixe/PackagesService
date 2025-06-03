@@ -18,14 +18,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-
-var serviceBusConnection = builder.Configuration["ServiceBusConnection"];
-builder.Services.AddSingleton(x => new ServiceBusClient(serviceBusConnection));
-builder.Services.AddSingleton(x =>
-    x.GetRequiredService<ServiceBusClient>().CreateSender("event-bus"));
-builder.Services.AddSingleton<PackageBusListener>();
-builder.Services.AddHostedService<PackageBusListener>();
-
 builder.Services.AddScoped<IPackageService, PackageService>();
 
 builder.Services.AddDbContext<PackagesDbContext>(options =>
