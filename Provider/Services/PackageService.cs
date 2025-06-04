@@ -65,26 +65,55 @@ public class PackageService : IPackageService
             };
         }
     }
-    public async Task<ServiceResponse<bool>> AddPackageAsync(Package package)
+    public async Task<ServiceResponse<List<Package>?>> AddPackagesAsync(List<PackageRegistrationDto> packages)
     {
+        if (packages == null || packages.Count == 0)
+        {
+            return new ServiceResponse<List<Package>?>
+            {
+                Success = false,
+                Error = "No packages provided.",
+                Data = []
+            };
+        }
+        List<Package> returnPackages = [];
         try
         {
-            await _packages.AddAsync(package);
+            foreach (var package in packages)
+            {
+                var packageEntity = new Package
+                {
+                    Name = package.Name,
+                    Price = package.Price,
+                    Description = package.Description,
+                    Seated = package.Seated,
+                    Placement = package.Placement,
+                    Benefits = package.Benefits,
+                    EventId = package.EventId
+                };
+
+                foreach (var benefit in packageEntity.Benefits!)
+                {
+                    benefit.PackageId = packageEntity.Id;
+                }
+
+                var response = await _packages.AddAsync(packageEntity);
+                returnPackages.Add(response.Entity);
+            }
             await _context.SaveChangesAsync();
-            return new ServiceResponse<bool>
+            return new ServiceResponse<List<Package>?>
             {
                 Success = true,
                 Message = "Package added successfully.",
-                Data = true
+                Data = returnPackages
             };
         }
         catch (Exception ex)
         {
-            return new ServiceResponse<bool>
+            return new ServiceResponse<List<Package>?>
             {
                 Success = false,
-                Error = $"Something went wrong when trying to add package: {ex.Message}",
-                Data = false
+                Error = $"Something went wrong when trying to add package: {ex.Message}"
             };
         }
     }

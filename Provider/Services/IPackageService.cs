@@ -4,7 +4,7 @@ namespace Provider.Services
 {
     public interface IPackageService
     {
-        Task<ServiceResponse<bool>> AddPackageAsync(Package package);
+        Task<ServiceResponse<List<Package>?>> AddPackagesAsync(List<PackageRegistrationDto> package);
         Task<ServiceResponse<bool>> DeletePackage(string packageId);
         Task<ServiceResponse<List<Package>>> GetAllPackagesAsync();
         Task<ServiceResponse<List<Package>>> GetPackagesForEventAsync(string eventId);

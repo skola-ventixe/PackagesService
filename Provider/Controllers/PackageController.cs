@@ -33,14 +33,16 @@ namespace Provider.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPackageAsync([FromBody] Package package)
+        public async Task<IActionResult> AddPackagesAsync([FromBody] List<PackageRegistrationDto> packages)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _packageService.AddPackageAsync(package);
+
+            var result = await _packageService.AddPackagesAsync(packages);
             if (!result.Success)
                 return BadRequest(result.Error);
-            return CreatedAtAction(nameof(GetPackagesAsync), new { id = package.Id }, package);
+
+            return StatusCode(201, result.Data);
         }
 
         [HttpPut]
