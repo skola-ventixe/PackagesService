@@ -7,7 +7,7 @@ using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var keyVaultEndpoint = new Uri(builder.Configuration["VaultUri"]!);
+var keyVaultEndpoint = new Uri(builder.Configuration.GetValue<string>("VaultUri")!);
 builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 builder.Services.AddControllers();
@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IPackageService, PackageService>();
 
 builder.Services.AddDbContext<PackagesDbContext>(options =>
-    options.UseSqlServer(builder.Configuration["SlqServer"]));
+    options.UseSqlServer(builder.Configuration.GetValue<string>("SqlServer")));
 
 
 
