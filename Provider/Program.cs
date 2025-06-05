@@ -1,5 +1,3 @@
-using System.Text;
-using Azure.Messaging.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Provider.Data;
 using Provider.Services;
@@ -7,7 +5,7 @@ using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var keyVaultEndpoint = new Uri(builder.Configuration.GetValue<string>("VaultUri")!);
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri")!);
 builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 builder.Services.AddControllers();
